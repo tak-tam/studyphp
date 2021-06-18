@@ -14,7 +14,7 @@
                 <p>本文</p>
                 <p><textarea name="content" rows="8" cols="40"><?php echo $content ?></textarea></p>
                 <p>
-                    <input type="hidden" name="no" value="<?php echo $no ?>">
+                    <input type="hidden" name="no" value="<?php echo $post_no ?>">
                     <p><input name="submit" type="submit" value="更新<?php echo $post_no ?>"></p>
                     <p><a href="blog_index.php">記事の一覧に戻る</a></p>
                 </p>

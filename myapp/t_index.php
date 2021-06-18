@@ -20,6 +20,7 @@
                 <p class="commment_link">
                 投稿日：<?php echo $post['time'] ?>　
                 <a href="comment.php?no=<?php echo $post['no'] ?>">コメント</a>
+                <a href="update.php?no=<?php echo $post['no'] ?>">編集</a>
                 <a href="delete.php?no=<?php echo $post['no'] ?>">削除</a>
                 </p>
             </div>

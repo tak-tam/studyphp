@@ -1,5 +1,7 @@
 <?php
-  $pdo = new PDO("mysql:dbname=blog;host=mysql;char=utf8", "root", "root");
+  require_once("const.php");
+  require_once("function.php");
+  $pdo = db_connect();
   $st = $pdo->query("SELECT * FROM post ORDER BY no DESC");
   $posts = $st->fetchAll();
   for ($i = 0; $i < count($posts); $i++) {

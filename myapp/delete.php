@@ -1,4 +1,5 @@
 <?php
+    $gets = filter_var_array($_GET);
     try {
         require_once("const.php");
         require_once("function.php");
@@ -10,9 +11,9 @@
         $posts = $st->fetchAll();   //←これスーパー無駄かも
         //stに消去する対象のオブジェクトを格納(noはGETでユーザが送った値を使用)
         $st = $pdo->prepare("DELETE FROM post WHERE no=?");
-        var_dump($_GET);    //検証用
+        // var_dump($gets);    //検証用
         //GETで受け取ったnoの値のデータ消去を実行
-        $st->execute(array($_GET['no']));
+        $st->execute(array($gets['no']));
         
     } catch(PDOException $e) {  //エラーが出たら受け取る
         var_dump($e);

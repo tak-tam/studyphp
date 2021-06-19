@@ -2,11 +2,13 @@
   require_once("const.php");
   require_once("function.php");
   $post_no = $error = $title = $content = '';
-  if(@$_POST['submit']){
+  $posts = filter_var_array($_POST);
+  $gets = filter_var_array($_GET);
+  if(@$posts['submit']){
       //var_dump($_POST);
-    $no = strip_tags($_POST['no']);
-    $title = $_POST['title'];
-    $content = $_POST['content'];
+    // $post_no = strip_tags($_POST['no']); //要らない
+    $title = $posts['title'];
+    $content = $posts['content'];
     if (!$title){
         $error .= 'タイトルがありません。<br>';
     }
@@ -21,8 +23,8 @@
         try {
           $pdo = db_connect();
           $st = $pdo->prepare("UPDATE post SET title=?, content=? WHERE no=?");
-          $st->execute(array($_POST['title'], $_POST['content'], $_POST['no']));
-          var_dump($st->errorInfo());
+          $st->execute(array($posts['title'], $posts['content'], $posts['no']));
+        //   var_dump($st->errorInfo()); //エラー出力用(常時出力できるようにするとheader()の前で出力するなと怒られる Cannot modify header information - headers already sent by)
       }catch(Exception $e){
           var_dump($e);
       }
@@ -30,7 +32,7 @@
       exit();
     }
   } else{
-      $post_no = strip_tags($_GET['no']);
+      $post_no = strip_tags($gets['no']);
   }
   require 't_update.php';
 ?>

@@ -15,7 +15,7 @@
                 <p><textarea name="content" rows="8" cols="40"><?php echo $content ?></textarea></p>
                 <p>
                 <input type="hidden" name="post_no" value="<?php echo $post_no ?>">
-                <input name="submit" type="submit" value="投稿<?php echo $post_no ?>">
+                <input name="submit" type="submit" value="投稿">
                 <a href="blog_index.php">記事の一覧に戻る</a>
                 </p>
                 <p><?php echo $error ?></p>

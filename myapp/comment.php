@@ -12,7 +12,8 @@
     if (!$content) $error .= 'コメントがありません。<br>';
     if (!$error) {
       $pdo = db_connect();
-      $st = $pdo->prepare("INSERT INTO comment(post_no,name,content) VALUES(?,?,?)");
+      $sql = "INSERT INTO comment(post_no,name,content) VALUES(?,?,?)";
+      $st = $pdo->prepare($sql);
       $st->execute(array($post_no, $name, $content));
       header('Location: blog_index.php');
       exit();

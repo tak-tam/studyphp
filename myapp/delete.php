@@ -10,7 +10,8 @@
         //変数postにpostテーブルの値を配列で格納
         $posts = $st->fetchAll();   //←これスーパー無駄かも
         //stに消去する対象のオブジェクトを格納(noはGETでユーザが送った値を使用)
-        $st = $pdo->prepare("DELETE FROM post WHERE no=?");
+        $sql = "DELETE FROM post WHERE no=?";
+        $st = $pdo->prepare($sql);
         // var_dump($gets);    //検証用
         //GETで受け取ったnoの値のデータ消去を実行
         $st->execute(array($gets['no']));

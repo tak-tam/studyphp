@@ -12,7 +12,9 @@
     if (!$content) $error .= '本文がありません。<br>';
     if (!$error) {
       $pdo = db_connect();
-      $st = $pdo->query("INSERT INTO post(title,content) VALUES('$title','$content')");
+      $sql = "INSERT INTO post(title,content) VALUES('$title','$content')";
+      $st = $pdo->prepare($sql);
+      $st->execute();
       header('Location: blog_index.php');
       exit();
     }

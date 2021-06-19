@@ -22,7 +22,8 @@
         //var_dump($_POST);
         try {
           $pdo = db_connect();
-          $st = $pdo->prepare("UPDATE post SET title=?, content=? WHERE no=?");
+          $sql = "UPDATE post SET title=?, content=? WHERE no=?";
+          $st = $pdo->prepare($sql);
           $st->execute(array($posts['title'], $posts['content'], $posts['no']));
         //   var_dump($st->errorInfo()); //エラー出力用(常時出力できるようにするとheader()の前で出力するなと怒られる Cannot modify header information - headers already sent by)
       }catch(Exception $e){

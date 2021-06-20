@@ -7,9 +7,9 @@
   if (@$posts['submit']) {
     $title = $posts['title'];
     $content = $posts['content'];
-    if (!$title) $error .= 'タイトルがありません。<br>';
-    if (mb_strlen($title) > 80) $error .= 'タイトルが長すぎます。<br>';
-    if (!$content) $error .= '本文がありません。<br>';
+    //記事投稿の入力チェック
+    $error = post_inputCheck($title, $content);
+    //投稿内容をdbに登録する処理
     if (!$error) {
       $pdo = db_connect();
       $sql = "INSERT INTO post(title,content) VALUES('$title','$content')";

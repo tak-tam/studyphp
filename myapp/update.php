@@ -9,15 +9,8 @@
     // $post_no = strip_tags($_POST['no']); //要らない
     $title = $posts['title'];
     $content = $posts['content'];
-    if (!$title){
-        $error .= 'タイトルがありません。<br>';
-    }
-    if (mb_strlen($title) > 80) {
-        $error .= 'タイトルが長すぎます。<br>';
-    }
-    if (!$content){
-        $error .= '本文がありません。<br>';
-    }
+    //投稿の入力チェック
+    $error = post_inputCheck($title, $content);
     if (!$error) {
         //var_dump($_POST);
         try {

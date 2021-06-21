@@ -18,7 +18,32 @@
         }
     }
 
-    //UPDATA
+    //UPDATE
+    function update($posts,$title,$content,$post_no) {
+        if($posts['name'] == 'post') {
+            //投稿記事の更新の場合
+            try {
+              $pdo = db_connect();
+              $sql = "UPDATE post SET title=$title, content=$content WHERE no=$post_no";
+              $st = $pdo->prepare($sql);
+              $st->execute();
+            //   var_dump($st->errorInfo()); //エラー出力用(常時出力できるようにするとheader()の前で出力するなと怒られる Cannot modify header information - headers already sent by)
+          }catch(PDOException $e){
+              echo $e->getMessage();
+          }
+        } else {
+            //コメントの更新の場合
+            try {
+              $pdo = db_connect();
+              $sql = "UPDATE comment SET name=$title, content=$content WHERE no=$post_no";
+              $st = $pdo->prepare($sql);
+              $st->execute();
+              //   var_dump($st->errorInfo());
+            } catch(PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+    }
 
     //DELETE
 
@@ -36,7 +61,7 @@
         }
         return $error;
     }
-
+    //コメント投稿の入力チェック
     function comment_inputCheck($name, $content) {
         $error = '';
         if (!$name) {

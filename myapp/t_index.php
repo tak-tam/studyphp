@@ -15,13 +15,15 @@
                 <div class="comment">
                     <h3><?php echo $comment['name'] ?></h3>
                     <p><?php echo nl2br($comment['content']) ?></p>
+                    <a href="update.php?no=<?php echo $comment['no'] ?>&name=comment">編集</a>
+                    <a href="delete.php?no=<?php echo $comment['no'] ?>&name=comment">削除</a>
                 </div>
                 <?php } ?>
                 <p class="commment_link">
                 投稿日：<?php echo $post['time'] ?>　
-                <a href="comment.php?no=<?php echo $post['no'] ?>">コメント</a>
-                <a href="update.php?no=<?php echo $post['no'] ?>">編集</a>
-                <a href="delete.php?no=<?php echo $post['no'] ?>">削除</a>
+                <a href="comment.php?no=<?php echo $post['no'] ?>&name=post">コメント</a>
+                <a href="update.php?no=<?php echo $post['no'] ?>&name=post">編集</a>
+                <a href="delete.php?no=<?php echo $post['no'] ?>&name=post">削除</a>
                 </p>
             </div>
         <?php } ?>

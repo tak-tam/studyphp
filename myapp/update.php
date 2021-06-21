@@ -6,7 +6,7 @@
   $gets = filter_var_array($_GET);
   if(@$posts['submit']){
       //var_dump($_POST);
-    // $post_no = strip_tags($_POST['no']); //要らない
+    $post_no = strip_tags($posts['no']);
     $title = $posts['title'];
     $content = $posts['content'];
     //投稿の入力チェック
@@ -15,12 +15,12 @@
         //var_dump($_POST);
         try {
           $pdo = db_connect();
-          $sql = "UPDATE post SET title=?, content=? WHERE no=?";
+          $sql = "UPDATE post SET title=$title, content=$content WHERE no=$post_no";
           $st = $pdo->prepare($sql);
-          $st->execute(array($posts['title'], $posts['content'], $posts['no']));
+          $st->execute();
         //   var_dump($st->errorInfo()); //エラー出力用(常時出力できるようにするとheader()の前で出力するなと怒られる Cannot modify header information - headers already sent by)
-      }catch(Exception $e){
-          var_dump($e);
+      }catch(PDOException $e){
+          echo $e->getMessage();
       }
       header('Location: blog_index.php');
       exit();

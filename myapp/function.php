@@ -46,6 +46,41 @@
     }
 
     //DELETE
+    function delete($gets) {
+        if($gets['name'] == 'post') {
+            //記事投稿の場合
+            try {
+                //ブログデータベースにphpからアクセス
+                $pdo = db_connect();
+                //pdoオブジェクトでpostテーブルのデータを入手
+                $sql = "SELECT * FROM post";
+                $st = $pdo->prepare($sql);
+                $st->execute();
+                //stに消去する対象のオブジェクトを格納(noはGETでユーザが送った値を使用)
+                $sql = "DELETE FROM post WHERE no=?";
+                $st = $pdo->prepare($sql);
+                // var_dump($gets);    //検証用
+                //GETで受け取ったnoの値のデータ消去を実行
+                $st->execute(array($gets['no']));
+                
+            } catch(PDOException $e) {  //エラーが出たら受け取る
+                $e->getMessage();
+            }
+        } else {
+            //コメント投稿の場合
+            try {
+                $pdo = db_connect();
+                $sql = "SELECT * FROM comment";
+                $st = $pdo->prepare($sql);
+                $st->execute();
+                $sql = "DELETE FROM comment WHERE no=?";
+                $st = $pdo->prepare($sql);
+                $st->execute(array($gets['no']));
+            } catch(PDOException $e) {
+                $e->getMessage();
+            }
+        }
+    }
 
     //記事投稿の入力チェック
     function post_inputCheck($title, $content) {

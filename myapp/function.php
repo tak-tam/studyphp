@@ -19,33 +19,68 @@
     }
 
     //UPDATE
-    function update($posts,$title,$content,$post_no) {
-        if($posts['name'] == 'post') {
-            //投稿記事の更新の場合
-            try {
-              $pdo = db_connect();
-              $sql = "UPDATE post SET title=$title, content=$content WHERE no=$post_no";
-              $st = $pdo->prepare($sql);
-              $st->execute();
-            //   var_dump($st->errorInfo()); //エラー出力用(常時出力できるようにするとheader()の前で出力するなと怒られる Cannot modify header information - headers already sent by)
-          }catch(PDOException $e){
-              echo $e->getMessage();
-          }
-        } else {
-            //コメントの更新の場合
-            try {
-              $pdo = db_connect();
-              $sql = "UPDATE comment SET name=$title, content=$content WHERE no=$post_no";
-              $st = $pdo->prepare($sql);
-              $st->execute();
-              //   var_dump($st->errorInfo());
-            } catch(PDOException $e) {
-                echo $e->getMessage();
-            }
+    //記事更新
+    function update_post($title,$content,$post_no) {
+        try {
+            $pdo = db_connect();
+            $sql = "UPDATE post SET title=$title, content=$content WHERE no=$post_no";
+            $st = $pdo->prepare($sql);
+            $st->execute();
+        //   var_dump($st->errorInfo()); //エラー出力用(常時出力できるようにするとheader()の前で出力するなと怒られる Cannot modify header information - headers already sent by)
+        }catch(PDOException $e){
+            echo $e->getMessage();
+        }
+    }
+
+    //コメント更新
+    function updatte_comment($title, $content, $no) {
+        try {
+            $pdo = db_connect();
+            $sql = "UPDATE comment SET name=$title, content=$content WHERE no=$no";
+            $st = $pdo->prepare($sql);
+            $st->execute();
+            //   var_dump($st->errorInfo());
+        } catch(PDOException $e) {
+            echo $e->getMessage();
         }
     }
 
     //DELETE
+    //記事の削除
+    function delete_post($gets) {
+        //記事投稿の場合
+        try {
+            //ブログデータベースにphpからアクセス
+            $pdo = db_connect();
+            //pdoオブジェクトでpostテーブルのデータを入手
+            $sql = "SELECT * FROM post";
+            $st = $pdo->prepare($sql);
+            $st->execute();
+            //stに消去する対象のオブジェクトを格納(noはGETでユーザが送った値を使用)
+            $sql = "DELETE FROM post WHERE no=?";
+            $st = $pdo->prepare($sql);
+            // var_dump($gets);    //検証用
+            //GETで受け取ったnoの値のデータ消去を実行
+            $st->execute(array($gets['no']));
+            
+        } catch(PDOException $e) {  //エラーが出たら受け取る
+            $e->getMessage();
+        }
+    }
+
+    function delete_comment($gets) {
+        try {
+            $pdo = db_connect();
+            $sql = "SELECT * FROM comment";
+            $st = $pdo->prepare($sql);
+            $st->execute();
+            $sql = "DELETE FROM comment WHERE no=?";
+            $st = $pdo->prepare($sql);
+            $st->execute(array($gets['no']));
+        } catch(PDOException $e) {
+            $e->getMessage();
+        }
+    }
 
     //記事投稿の入力チェック
     function post_inputCheck($title, $content) {

@@ -11,12 +11,18 @@
     $error = post_inputCheck($title, $content);
     //投稿内容をdbに登録する処理
     if (!$error) {
-      $pdo = db_connect();
-      $sql = "INSERT INTO post(title,content) VALUES('$title','$content')";
-      $st = $pdo->prepare($sql);
-      $st->execute();
-      header('Location: blog_index.php');
-      exit();
+      try {
+        
+        $pdo = db_connect();
+        $sql = "INSERT INTO post(title,content) VALUES('$title','$content')";
+        $st = $pdo->prepare($sql);
+        $st->execute();
+        //var_dump($st->errorInfo());
+        header('Location: blog_index.php');
+        exit();
+      } catch(Exception $e) {
+        echo $e->getMessage();
+      }
     }
   }
   require 't_post.php';

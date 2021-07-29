@@ -1,9 +1,9 @@
 <?php
-  require_once("const.php");
   require_once("function.php");
-  $pdo = db_connect();
+  $blogFunction = new BlogFunction();
   //sqlはそのまま実行するよりprepareを使用した方が安全
   $sql = "SELECT * FROM post ORDER BY no DESC";
+  $pdo = $blogFunction->getPdo();
   $st = $pdo->prepare($sql);
   $st->execute();
   $posts = $st->fetchAll();

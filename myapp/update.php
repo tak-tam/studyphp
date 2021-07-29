@@ -1,6 +1,5 @@
 <?php
-  require_once("const.php");
-  require_once("function.php");
+  $function = new Blog_function();
   $no = $error = $title = $content = $name = '';
   $posts = filter_var_array($_POST);
   $gets = filter_var_array($_GET);
@@ -11,13 +10,13 @@
     $content = $posts['content'];
     $name = $posts['name'];
     //投稿の入力チェック
-    $error = post_inputCheck($title, $content);
+    $error = $function->post_inputCheck($title, $content);
     if (!$error) {
       if($posts['name'] == 'post') {
-        update_post($title,$content,$no);
+        $function->update_post($title,$content,$no);
       }
       if($posts['name'] == 'comment') {
-        updatte_comment($title,$content,$no);
+        $function->updatte_comment($title,$content,$no);
       }
       header('Location: blog_index.php');
       exit();

@@ -1,5 +1,13 @@
 <?php
-  $function = new Blog_function();
+  session_start();
+   require_once("function.php");
+  session_start();
+  if(!isset($_SESSION["EMAIL"])) {
+    header("Location: login.php");
+  }
+
+  require_once("function.php");
+  $blogFunction = new BlogFunction();
   $post_no = $error = $name = $content = '';
   $posts = filter_var_array($_POST);
   $gets = filter_var_array($_GET);

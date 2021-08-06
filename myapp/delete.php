@@ -1,4 +1,8 @@
 <?php
+  session_start();
+  if(!isset($_SESSION["EMAIL"])) {
+    header("Location: login.php");
+  }
     require_once("function.php");
     $gets = filter_var_array($_GET);
     $function = new BlogFunction();

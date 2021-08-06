@@ -1,5 +1,9 @@
 <?php
   require_once("function.php");
+  session_start();
+  if(!isset($_SESSION["EMAIL"])) {
+    header("Location: login.php");
+  }
   $blogFunction = new BlogFunction();
   //sqlはそのまま実行するよりprepareを使用した方が安全
   $sql = "SELECT * FROM post ORDER BY no DESC";

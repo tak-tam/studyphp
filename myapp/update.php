@@ -1,5 +1,7 @@
 <?php
-  $function = new Blog_function();
+  require_once("redirect_login.php");
+   require_once("function.php");
+  $function = new BlogFunction();
   $no = $error = $title = $content = $name = '';
   $posts = filter_var_array($_POST);
   $gets = filter_var_array($_GET);

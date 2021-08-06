@@ -1,7 +1,16 @@
 <?php
-    $gets = filter_var_array($_GET);
-    require_once("const.php");
+  session_start();
+  if(!isset($_SESSION["EMAIL"])) {
+    header("Location: login.php");
+  }
     require_once("function.php");
-    delete($gets);
+    $gets = filter_var_array($_GET);
+    $function = new BlogFunction();
+    if($gets['name'] == 'post') {
+        $function->delete_post($gets);
+    }
+    if($gets['name'] == 'comment') {
+        $function->delete_comment($gets);
+    }
     require 't_delete.php';
 ?>
